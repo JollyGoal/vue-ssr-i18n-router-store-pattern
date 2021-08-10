@@ -1,7 +1,15 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import './registerServiceWorker'
-import router from './router'
-import store from './store'
+import buildApp from './app';
+// import registerServiceWorker from './registerServiceWorker';
 
-createApp(App).use(store).use(router).mount('#app')
+const { app, router, store } = buildApp();
+
+const storeInitialState = window.INITIAL_DATA;
+if (storeInitialState) {
+    store.replaceState(storeInitialState);
+}
+
+router.isReady()
+    .then(() => {
+        // app.use(registerServiceWorker)
+        app.mount('#app', true);
+    });
