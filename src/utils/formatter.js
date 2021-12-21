@@ -1,6 +1,22 @@
 import { i18n } from '../i18n'
 
 export function useFormatter() {
+  const isToday = (someDate) => {
+    const today = new Date()
+    return someDate.getDate() == today.getDate() &&
+      someDate.getMonth() == today.getMonth() &&
+      someDate.getFullYear() == today.getFullYear()
+  }
+  const isYesterday = (someDate) => {
+    const today = new Date()
+    let yesterday = new Date();
+
+    yesterday.setDate(today.getDate() - 1);
+    return someDate.getDate() == yesterday.getDate() &&
+      someDate.getMonth() == yesterday.getMonth() &&
+      someDate.getFullYear() == yesterday.getFullYear()
+  }
+
   const handleDate = (value, format = 'dd.mm.yyyy') => {
     const dateObj = new Date(value);
     const months = [
@@ -24,6 +40,8 @@ export function useFormatter() {
         return `${months[dateObj.getMonth()]}`
       case 'dd mmmm':
         return `${("0" + dateObj.getDate()).substr(-2)} ${months[dateObj.getMonth()]}`
+      case 'dddd':
+        return isToday(dateObj) ? i18n.global.t("days.today") : isYesterday(dateObj) ? i18n.global.t("days.yesterday") : i18n.global.t("days." + dateObj.getDay())
       default:
         return `${("0" + dateObj.getDate()).substr(-2)}.${("0" + (dateObj.getMonth() + 1)).substr(-2)}.${dateObj.getFullYear()}`
     }
@@ -32,6 +50,8 @@ export function useFormatter() {
   const handleTime = (value, format = 'hh:mm') => {
     const dateObj = new Date(value);
     switch (format) {
+      // case 'dd.mm.yyyy':
+      //   break;
       default:
         return `${("0" + dateObj.getHours()).substr(-2)}:${("0" + dateObj.getMinutes()).substr(-2)}`
     }

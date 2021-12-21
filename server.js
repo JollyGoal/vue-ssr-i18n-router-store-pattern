@@ -61,6 +61,7 @@ server.get('*', async (req, res) => {
   res.setHeader('Content-Type', 'text/html');
 
   // console.log(process.memoryUsage().heapUsed / 1000000)
+  microCache.set(req.url, html)
   return res.end(html);
 });
 

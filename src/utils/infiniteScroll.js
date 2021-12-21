@@ -44,6 +44,7 @@ export function useInfiniteScroll({ wrapper, retrieve, newsCount, currentPage, p
   const callBack = () => {
     loadFlag = true;
     cb()
+    if (newsCount.value <= currentPage.value * pageSize) handleScrollFinish()
   }
 
   const loadData = () => {
