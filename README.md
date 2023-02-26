@@ -1,5 +1,9 @@
 # luxor-vue
 
+# Deprecated
+New repo Vue3:
+https://github.com/JollyGoal/vue3-boilerplate
+
 ## Project setup
 ```
 npm install
